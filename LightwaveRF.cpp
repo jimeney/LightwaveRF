@@ -24,7 +24,7 @@ static boolean lw_p_started = false; // packet started
 static boolean lw_b_started = false; // byte started
 static byte lw_num_bytes = 0; // number of bytes received 
 
-static const int lw_bit_delay = 640;
+static const int lw_bit_delay = 560;
 static const byte lw_repeats = 12; // Number of repeats of message sent
 
 /**
@@ -163,6 +163,7 @@ void lw_setup() {
   
 /**
   Transmit a 1 or 0 bit to a LightwaveRF device
+  Amended based on Slumberjack's changes to support the CFR bulbs
 **/
 void lw_send_bit(byte b) {
   delayMicroseconds(25);
@@ -170,6 +171,10 @@ void lw_send_bit(byte b) {
   delayMicroseconds(lw_bit_delay/2);
   digitalWrite(lw_tx_pin,LOW);
   delayMicroseconds(lw_bit_delay/2);
+  if (b == LOW)
+    {
+     delayMicroseconds(300);
+    }
 }
 
 /**
